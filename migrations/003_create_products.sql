@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price NUMERIC(12,2) NOT NULL,
+  sku VARCHAR(100),
+  stock INTEGER DEFAULT 0,
+  category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
