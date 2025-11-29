@@ -8,7 +8,9 @@
     "watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "start": "node ./dist/server.js",
     "migrate": "ts-node ./scripts/runMigrations.ts",
-    "test": "jasmine",
+    "migrate:down": "ts-node ./scripts/runMigrations.ts down",
+    "migrate:test": "set ENV=test&& ts-node ./scripts/runMigrations.ts",
+    "test": "set ENV=test&& jasmine",
     "prepare": "tsc"
   },
   "author": "",

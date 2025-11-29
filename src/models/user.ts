@@ -8,9 +8,15 @@ export type User = {
   last_name?: string;
   is_admin?: boolean;
   created_at?: string;
+  password_hash?: string;
 };
 
 const SALT_ROUNDS = +(process.env.BCRYPT_SALT_ROUNDS || 10);
+
+export async function index(): Promise<User[]> {
+  const res = await db.query('SELECT id, email, first_name, last_name, is_admin, created_at FROM users');
+  return res.rows;
+}
 
 export async function createUser(email: string, password: string, first_name?: string, last_name?: string) {
   const hash = await bcrypt.hash(password, SALT_ROUNDS);
