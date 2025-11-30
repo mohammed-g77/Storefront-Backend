@@ -10,7 +10,7 @@
     "migrate": "ts-node ./scripts/runMigrations.ts",
     "migrate:down": "ts-node ./scripts/runMigrations.ts down",
     "migrate:test": "set ENV=test&& ts-node ./scripts/runMigrations.ts",
-    "test": "set ENV=test&& jasmine",
+    "test": "set ENV=test&& ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
     "prepare": "tsc"
   },
   "author": "",

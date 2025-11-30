@@ -38,22 +38,38 @@ export async function createOrder(userId: number, items: {product_id:number, qua
 }
 
 export async function getOrdersForUser(userId: number) {
-  const r = await db.query('SELECT * FROM orders WHERE user_id=$1 ORDER BY created_at DESC', [userId]);
-  return r.rows;
+  try {
+    const r = await db.query('SELECT * FROM orders WHERE user_id=$1 ORDER BY created_at DESC', [userId]);
+    return r.rows;
+  } catch (err) {
+    throw new Error(`Could not get orders for user ${userId}. Error: ${err}`);
+  }
 }
 
 export async function getOrderById(id: number) {
-  const r = await db.query('SELECT * FROM orders WHERE id=$1', [id]);
-  return r.rows[0];
+  try {
+    const r = await db.query('SELECT * FROM orders WHERE id=$1', [id]);
+    return r.rows[0];
+  } catch (err) {
+    throw new Error(`Could not get order by id ${id}. Error: ${err}`);
+  }
 }
 
 // Order Products methods
 export async function addProductToOrder(orderId: number, productId: number, quantity: number, unitPrice: number) {
-  const r = await db.query('INSERT INTO order_products (order_id, product_id, quantity, unit_price) VALUES ($1,$2,$3,$4) RETURNING *', [orderId, productId, quantity, unitPrice]);
-  return r.rows[0];
+  try {
+    const r = await db.query('INSERT INTO order_products (order_id, product_id, quantity, unit_price) VALUES ($1,$2,$3,$4) RETURNING *', [orderId, productId, quantity, unitPrice]);
+    return r.rows[0];
+  } catch (err) {
+    throw new Error(`Could not add product to order. Error: ${err}`);
+  }
 }
 
 export async function getOrderProducts(orderId: number) {
-  const r = await db.query('SELECT * FROM order_products WHERE order_id=$1', [orderId]);
-  return r.rows;
+  try {
+    const r = await db.query('SELECT * FROM order_products WHERE order_id=$1', [orderId]);
+    return r.rows;
+  } catch (err) {
+    throw new Error(`Could not get order products. Error: ${err}`);
+  }
 }

@@ -1,6 +1,6 @@
 import express from 'express';
 import { listProducts, getProductById, createProduct } from '../models/product';
-import { requireAdmin } from '../middleware/auth';
+import { requireAdmin, requireAuth } from '../middleware/auth';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', requireAdmin, async (req, res) => {
+router.post('/', requireAuth, requireAdmin, async (req, res) => {
   try {
     const data = req.body;
     const created = await createProduct(data);
